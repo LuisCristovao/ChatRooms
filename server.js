@@ -94,14 +94,15 @@ io.on('connection', function(socket){
                 for(socket_id in room_users){
                     //room_users value are the users respective socket
                     var log=RoomLog[room];
+					console.log(log);
                     for(i=0;i<log.length;i++){
-                        room_users[socket_id].emit('message',log[i]);
+                        room_users[socket.id].emit('message',log[i]);
                     }
                 }
         }
     }); 
     socket.on('message', function (msg) {
-        //console.log(msg);
+        console.log(msg);
         //io.emit('message',msg);
         var room=msg.split('$#/$')[0];
         var real_msg=msg.split('$#/$')[1];
