@@ -49,9 +49,10 @@
 
             });
             socket.on('message',function(msg){
-                console.log(msg);
+                //console.log(msg);
                 str=msg+'\n';
                 $('#messages').append("<p>"+htmlEncode(str)+"</p>");
+				$( "#messages" ).scrollTop( $("#messages").prop("scrollHeight"));
             });  
             $('#Send').click(function(){
                 socket.emit('message',myroom+'$#/$'+$('#name').val()+': '+$('#message').val());
