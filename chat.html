@@ -11,7 +11,7 @@
     Msg<input id="message" type="text">
     <button id='Send'>Send</button><br> 
     <!--<div id="messages" style="overflow: auto;heigh:110px;width:110px;"></div> --> 
-    <textarea id="messages" style="width:50%;height:200px;"></textarea>
+    <div id="messages" style="width:50%;height:200px;overflow:auto;"></div>
      
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
@@ -19,6 +19,17 @@
         var str='';
         var myroom=window.location.pathname.split('/')[1];
         $('#info').html('Welcome to the room '+myroom);
+		function htmlEncode(value){
+		  //create a in-memory div, set it's inner text(which jQuery automatically encodes)
+		  //then grab the encoded contents back out.  The div never exists on the page.
+		  return $('<div/>').text(value).html();
+		}
+
+		function htmlDecode(value){
+		  return $('<div/>').html(value).text();
+		}
+		
+		
         function Start(){
 
             var socket = io();
@@ -28,8 +39,8 @@
             socket.emit('insert user in chat',myroom);
             
             socket.on('insert user in chat',function(msg){
-                str+=msg+'\n';
-                $('#messages').html(str);
+                str=msg+'\n';
+                $('#messages').append("<p>"+htmlEncode(str)+"</p>");
             });
             
             
@@ -39,8 +50,8 @@
             });
             socket.on('message',function(msg){
                 console.log(msg);
-                str+=msg+'\n';
-                $('#messages').html(str);
+                str=msg+'\n';
+                $('#messages').append("<p>"+htmlEncode(str)+"</p>");
             });  
             $('#Send').click(function(){
                 socket.emit('message',myroom+'$#/$'+$('#name').val()+': '+$('#message').val());
