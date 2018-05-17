@@ -28,7 +28,15 @@
 		function htmlDecode(value){
 		  return $('<div/>').html(value).text();
 		}
-		
+		function DetectString(string, expression_to_find){
+			var n = str.indexOf(expression_to_find);
+			if(n==-1){
+				return false;
+			}
+			else{
+				return true;
+			}
+		}
 		
         function Start(){
 
@@ -49,9 +57,16 @@
 
             });
             socket.on('message',function(msg){
-                //console.log(msg);
+                console.log(msg);
                 str=msg+'\n';
-                $('#messages').append("<p>"+htmlEncode(str)+"</p>");
+				if(DetectString(str,"http://") || DetectString(str,"https://")){
+					var name=str.split(":")[0];
+					var message=str.split(":")[1];
+					$('#messages').append(name+":<a href='"+message+"'>"+htmlEncode(message)+"</a>");
+				}
+				else{
+					$('#messages').append("<p>"+htmlEncode(str)+"</p>");
+				}
 				$( "#messages" ).scrollTop( $("#messages").prop("scrollHeight"));
             });  
             $('#Send').click(function(){
