@@ -60,9 +60,9 @@
                 console.log(msg);
                 str=msg+'\n';
 				if(DetectString(str,"http://") || DetectString(str,"https://")){
-					var name=str.split(":")[0];
-					var message=str.split(":")[1];
-					$('#messages').append(name+":<a href='"+message+"'>"+htmlEncode(message)+"</a>");
+					var name=str.split(": ")[0];
+					var message=str.split(": ")[1];
+					$('#messages').append("<p>"+name+": <a href='"+message+"'>"+htmlEncode(message)+"</a></p>");
 				}
 				else{
 					$('#messages').append("<p>"+htmlEncode(str)+"</p>");
