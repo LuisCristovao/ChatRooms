@@ -23,6 +23,7 @@
         var str='';
         var myroom=window.location.pathname.split('/')[1];
         $('#info').html('Welcome to the room '+myroom);
+        var visible=true;
 		function htmlEncode(value){
 		  //create a in-memory div, set it's inner text(which jQuery automatically encodes)
 		  //then grab the encoded contents back out.  The div never exists on the page.
@@ -72,7 +73,10 @@
 					$('#messages').append("<p>"+htmlEncode(str)+"</p>");
 				}
 				$( "#messages" ).scrollTop( $("#messages").prop("scrollHeight"));
-                $("#favicon").prop("href","/favicons/red.jpg");
+                if(visible==false){
+                    $("#favicon").prop("href","/favicons/red.jpg");    
+                }
+                
             });  
             $('#Send').click(function(){
                 socket.emit('message',myroom+'$#/$'+$('#name').val()+': '+$('#message').val());
