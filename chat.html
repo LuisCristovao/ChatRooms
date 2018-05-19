@@ -5,7 +5,7 @@
       <!--<link rel="icon" href="demo_icon.gif" type="image/gif" sizes="16x16">-->
      <!--<link rel="icon" href="/favicons/green.png"  >  -->
       <!--<link rel="icon" href="/favicons/green.ico" >-->
-      <link rel="shortcut icon" type="image/jpg" href="/favicons/green.jpg"/>
+      <link id="favicon" rel="shortcut icon" type="image/jpg" href="/favicons/green.jpg"/>
   </head>
   <body>
     <h1 id="info"></h1>
@@ -72,6 +72,7 @@
 					$('#messages').append("<p>"+htmlEncode(str)+"</p>");
 				}
 				$( "#messages" ).scrollTop( $("#messages").prop("scrollHeight"));
+                $("#favicon").prop("href","/favicons/red.jpg");
             });  
             $('#Send').click(function(){
                 socket.emit('message',myroom+'$#/$'+$('#name').val()+': '+$('#message').val());
@@ -86,8 +87,54 @@
                 }
             });
         }
-      window.onload=Start();    
-      
+        
+        
+        function getHiddenProp(){
+            var prefixes = ['webkit','moz','ms','o'];
+
+            // if 'hidden' is natively supported just return it
+            if ('hidden' in document) return 'hidden';
+
+            // otherwise loop over all the known prefixes until we find one
+            for (var i = 0; i < prefixes.length; i++){
+                if ((prefixes[i] + 'Hidden') in document) 
+                    return prefixes[i] + 'Hidden';
+            }
+
+            // otherwise it's not supported
+            return null;
+        }
+         function visChange() {
+        //var txtFld = document.getElementById('visChangeText');
+
+		
+			if (isHidden()) {
+				//txtFld.value += "Tab Hidden!\n";
+                
+                visible=false;
+                console.log("visible: " +visible);
+                
+                
+            }
+			else {
+				//txtFld.value += "Tab Visible!\n";
+                
+                visible=true;
+                console.log("visible: " +visible);
+                startTime = new Date().getTime();
+                $("#favicon").prop("href","/favicons/green.jpg");
+            }
+		
+        }
+
+        function isHidden() {
+            var prop = getHiddenProp();
+            if (!prop) return false;
+
+            return document[prop];
+        }
+        window.onload=Start();    
+        document.addEventListener('visibilitychange', visChange);
     </script>
   </body>
 </html>
