@@ -2,7 +2,7 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var port = process.env.PORT || 3000;
-
+var express = require("express");
 //deal with post
 var bodyParser     =        require("body-parser");
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -76,6 +76,12 @@ app.post('/:roomName', function(req, res){
     }
 
 });
+
+//no security serving static files
+app.use('/favicons', express.static(__dirname+'/favicons'));
+/*app.get('/favicon/:img', function(req, res){
+  res.sendFile(__dirname + '/'+req.body.img);
+});*/
 
 io.on('connection', function(socket){
     console.log("Connected to websocket:"+socket.id); 
