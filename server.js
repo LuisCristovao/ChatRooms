@@ -78,6 +78,14 @@ app.post('/:roomName', function(req, res){
 
 });
 
+
+app.post('/upload/:roomName',function(req,res){
+    
+    var roomName=req.params.roomName;
+    console.log(roomName)
+});
+
+
 io.on('connection', function(socket){
     console.log("Connected to websocket:"+socket.id); 
     setInterval(function(){socket.emit('date',new Date())},1000);
