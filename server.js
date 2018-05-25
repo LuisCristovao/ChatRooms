@@ -83,6 +83,21 @@ app.post('/upload/:roomName',function(req,res){
     
     var roomName=req.params.roomName;
     console.log(roomName)
+    
+    var form = new formidable.IncomingForm();
+    form.parse(req, function (err, fields, files) {
+        var oldpath = files.filetoupload.path;
+        var dir=__dir+'/'+roomName;
+        if (!fs.existsSync(dir)){
+            fs.mkdirSync(dir);
+        }
+        var newpath = dir + files.filetoupload.name;
+        fs.rename(oldpath, newpath, function (err) {
+            if (err) throw err;
+            res.write('File uploaded and moved!');
+            res.end();
+        });
+    });
 });
 
 
