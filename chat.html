@@ -12,12 +12,8 @@
     <button id='Send'>Send</button><br> 
     <!--<div id="messages" style="overflow: auto;heigh:110px;width:110px;"></div> --> 
     <div id="messages" style="width:50%;height:200px;overflow:auto;"></div>
-    <form ref='uploadForm' 
-      id='uploadForm' 
-      action='/upload/ola' 
-      method='post' 
-      encType="multipart/form-data">
-        <input type="file" name="sampleFile" />
+    <form  id='uploadForm' action='/upload/ola' method='post'>
+        <input type="file" name="filetoupload" />
         <input type='submit' value='Upload!' />
     </form>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
