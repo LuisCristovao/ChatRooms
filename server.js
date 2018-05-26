@@ -87,7 +87,7 @@ app.post('/upload/:roomName',function(req,res){
     var form = new formidable.IncomingForm();
     form.parse(req, function (err, fields, files) {
         var oldpath = files.filetoupload.path;
-        var dir=__dir+'/'+roomName;
+        var dir=__dirname+'/'+roomName;
         if (!fs.existsSync(dir)){
             fs.mkdirSync(dir);
         }
