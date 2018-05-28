@@ -102,7 +102,7 @@ app.post('/upload/:roomName',function(req,res){
             if (err) throw err;
             
             res.write('File uploaded and moved!');
-            res.end();    
+            return res.end();    
             
             
         });
