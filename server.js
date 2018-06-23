@@ -79,6 +79,7 @@ app.post('/:roomName', function(req, res){
 
 //no security serving static files
 app.use('/favicons', express.static(__dirname+'/favicons'));
+app.use('/sound', express.static(__dirname+'/sound'));
 /*app.get('/favicon/:img', function(req, res){
   res.sendFile(__dirname + '/'+req.body.img);
 });*/
