@@ -82,7 +82,7 @@
                 if(visible==false){
                     $("#favicon").prop("href","/favicons/red.jpg");
                     //make sound
-                    var audio = new Audio('sound/Pling.mp3');
+                    
                     audio.play();
                 }
                 
@@ -121,7 +121,7 @@
         //var txtFld = document.getElementById('visChangeText');
 
 		
-			if (isHidden()) {
+			if (document.visibilityState === 'hidden') {
 				//txtFld.value += "Tab Hidden!\n";
                 
                 visible=false;
@@ -134,7 +134,7 @@
                 
                 visible=true;
                 console.log("visible: " +visible);
-                startTime = new Date().getTime();
+                //startTime = new Date().getTime();
                 $("#favicon").prop("href","/favicons/green.jpg");
             }
 		
@@ -148,6 +148,7 @@
         }
         window.onload=Start();    
         document.addEventListener('visibilitychange', visChange);
+        
     </script>
   </body>
 </html>
