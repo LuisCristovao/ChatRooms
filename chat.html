@@ -6,6 +6,16 @@
      <!--<link rel="icon" href="/favicons/green.png"  >  -->
       <!--<link rel="icon" href="/favicons/green.ico" >-->
       <link id="favicon" rel="shortcut icon" type="image/jpg" href="/favicons/green.jpg"/>
+      <style>
+          .btn{
+              background-color:lightgrey;
+              
+              border-radius: 10%;
+              width: 100px;
+              height: 40px;
+              
+          }
+      </style>
   </head>
   <body>
     <h1 id="info"></h1>
@@ -16,12 +26,12 @@
     <button id='Send'>Send</button><br> 
     <!--<div id="messages" style="overflow: auto;heigh:110px;width:110px;"></div> --> 
     <div id="messages" style="width:50%;height:200px;overflow:auto;"></div>
-     
+    <button onclick="DeleteText()" class="btn">Delete Chat Text</button> 
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
         var audio = new Audio('sound/Pling.mp3');
-        
+        var socket;
         
         var str='';
         var myroom=window.location.pathname.split('/')[1];
@@ -48,7 +58,7 @@
 		
         function Start(){
 
-            var socket = io();
+            socket = io();
             
             //connection
             //alert(window.location.pathname);
@@ -99,6 +109,11 @@
                      $('#Send').click();
                 }
             });
+            
+            
+            socket.on('delete text',function(msg){
+                $('#messages').html('');
+            });
         }
         
         
@@ -146,6 +161,12 @@
 
             return document[prop];
         }
+        
+        function DeleteText(){
+            socket.emit('delete text',myroom);
+        }
+        
+        
         window.onload=Start();    
         document.addEventListener('visibilitychange', visChange);
         

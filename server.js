@@ -51,7 +51,7 @@ app.get('/', function(req, res){
 });
 
 app.post('/:roomName', function(req, res){
-    console.log(req.body);
+    //console.log(req.body);
     
     var roomName=req.body.roomName;
     var pass=req.body.roomPass;
@@ -85,7 +85,7 @@ app.use('/sound', express.static(__dirname+'/sound'));
 });*/
 
 io.on('connection', function(socket){
-    console.log("Connected to websocket:"+socket.id); 
+    //console.log("Connected to websocket:"+socket.id); 
     setInterval(function(){socket.emit('date',new Date())},1000);
     //chat.html
     socket.on('insert user in chat', function (msg) {
@@ -110,7 +110,7 @@ io.on('connection', function(socket){
         }
     }); 
     socket.on('message', function (msg) {
-        console.log(msg);
+        //console.log(msg);
         //io.emit('message',msg);
         var room=msg.split('$#/$')[0];
         var real_msg=msg.split('$#/$')[1];
@@ -137,7 +137,24 @@ io.on('connection', function(socket){
     socket.on('disconnect', function () {
         console.log('Disconnected:'+socket.id);
         //tirar user da RoomUsers e de outros sitios
-    });    
+    });
+    
+    socket.on('delete text', function (msg) {
+        console.log(msg);
+        //io.emit('message',msg);
+        var room=msg;
+        
+        var room_users=RoomUsers[room];
+        //empty log
+		RoomLog[room]=[];
+		
+        for(socket_id in room_users){
+            //room_users value are the users respective socket
+            
+            room_users[socket_id].emit('delete text','');
+        }
+    }); 
+    
 });
 
 http.listen(port, function(){
