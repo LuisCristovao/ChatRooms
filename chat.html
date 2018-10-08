@@ -59,7 +59,9 @@
         function Start(){
 
             socket = io();
-            
+            Notification.requestPermission().then(function(result) {
+                console.log(result);
+            });
             //connection
             //alert(window.location.pathname);
             socket.emit('insert user in chat',myroom);
@@ -90,10 +92,14 @@
 				}
 				$( "#messages" ).scrollTop( $("#messages").prop("scrollHeight"));
                 if(visible==false){
+                    //change favicon
                     $("#favicon").prop("href","/favicons/red.jpg");
-                    //make sound
+                    //Vibrate
                     window.navigator.vibrate(300);
+                    //make sound
                     audio.play();
+                    
+                    new Notification("New Message in "+myroom);
                 }
                 
             });  
