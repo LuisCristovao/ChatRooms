@@ -13,7 +13,7 @@
     <h3 id="UsefullMsg">Create Chat Room</h3>
     <div ng-app="">
         <form id="SendPost"  action={{roomName}} method="post">
-            RoomName : <input type="text" id="roomName" name="roomName" ng-model="roomName" placeholder="Enter name here">
+            RoomName : <input type="text" id="roomName" name="roomName" ng-model="roomName" placeholder="Enter name here" onchange="checkRoomName()">
             Password: <input id="roomPass" name="roomPass" type="password"  />
             <button   type="submit" >Create Room</button>
         </form>
@@ -25,6 +25,15 @@
 	</div>
      <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.2.0/socket.io.js"></script>
     <script>
+        String.prototype.replaceAll = function(search, replacement) {
+            var target = this;
+            return target.replace(new RegExp(search, 'g'), replacement);
+        };
+        function checkRoomName(){
+            var input=document.getElementById("roomName")
+            input.value=input.value.replaceAll(" ","-")
+        }
+        
         document.onload=Start();
 		function Start(){
 			
